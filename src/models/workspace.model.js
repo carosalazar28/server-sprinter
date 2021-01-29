@@ -8,6 +8,15 @@ const workspaceSchema = new Schema({
   description: {
     type: String,
   },
+  weeks: {
+    type: Number,
+  },
+  sprint: {
+    type: Number,
+  },
+  teammates: {
+    type: Array,
+  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User',

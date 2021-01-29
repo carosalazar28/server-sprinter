@@ -55,7 +55,9 @@ module.exports = {
 
   async show( req, res ) {
     try {
-      const user = await User.findById( req.user )
+      const user = await User
+        .findById( req.user )
+        .populate({ path: 'workspaces', select: 'name description owner'})
       if( !user ) {
         throw new Error('User not found')
       }
