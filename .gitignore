@@ -1,0 +1,14 @@
+# enviromental
+.env
+
+# dependencies
+node_modules/
+.vscode/
+.env
+yarn.lock
+
+# misc
+.DS_store
+coverage
+
+yarn-error.log
