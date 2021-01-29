@@ -17,6 +17,10 @@ const userSchema = new Schema ({
   photo: {
     type: String,
   },
+  workspaces: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Workspace',
+  }],
 }, {
   timestamps: true,
 });
