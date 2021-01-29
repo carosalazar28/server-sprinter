@@ -8,6 +8,7 @@ module.exports = {
       const { username, email, password } = req.body;
       const encPassword = await bcrypt.hash( password, 8)
       const user = await User.create({ username, email, password: encPassword })
+
       const token = jwt.sign(
         { id: user._id },
         process.env.SECRET,
