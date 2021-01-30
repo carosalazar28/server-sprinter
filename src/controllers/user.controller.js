@@ -57,7 +57,7 @@ module.exports = {
     try {
       const user = await User
         .findById( req.user )
-        .populate({ path: 'workspaces', select: 'name description owner'})
+        .populate({ path: 'workspaces', select: 'name description owner teammates'})
       if( !user ) {
         throw new Error('User not found')
       }

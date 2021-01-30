@@ -1,5 +1,6 @@
 const Workspace = require('../models/workspace.model');
 const User = require('../models/user.model');
+const { ReadStream } = require('fs');
 
 module.exports = {
   async create( req, res ) {
@@ -44,7 +45,13 @@ module.exports = {
     try { 
       const { workspaceId } = req.params
 
-      const workspace = await Workspace.findByIdAndUpdate(workspaceId, req.body, { new: true, useFindAndModify: false })
+      const { teammates, ...rest } = req.body
+
+      const teammate = teammates
+
+      const update = { ...rest, teammates: teammates ? teammates.concat(teammate): null}
+      console.log(update)
+      const workspace = await Workspace.findByIdAndUpdate(workspaceId, update, { new: true, useFindAndModify: false })
       if( !workspace ) {
         throw new Error('Could not updated that workspace')
       }
