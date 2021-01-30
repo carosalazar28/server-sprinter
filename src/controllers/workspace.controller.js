@@ -5,12 +5,13 @@ module.exports = {
   async create( req, res ) {
     try {
       const user = await User.findById(req.user);
+      console.log(user)
       if( !user ) {
         throw new Error('User does not exist')
       }
 
       const workspace = await Workspace.create({ ...req.body, owner: user })
-      
+      console.log(workspace)
       user.workspaces.push(workspace._id)
       await user.save({ validateBeforeSave: false })
 
@@ -42,12 +43,6 @@ module.exports = {
   async update( req, res ) {
     try { 
       const { workspaceId } = req.params
-
-      const { teammates, ...rest } = req.body
-
-      const teammate = await User.findOne({ username: teammates }).exec()
-
-      const update = { ...rest, teammates: teammates ? teammates.push(teammates) : '' }
 
       const workspace = await Workspace.findByIdAndUpdate(workspaceId, req.body, { new: true, useFindAndModify: false })
       if( !workspace ) {

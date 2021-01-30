@@ -14,9 +14,7 @@ const workspaceSchema = new Schema({
   sprint: {
     type: Number,
   },
-  teammates: {
-    type: Array,
-  },
+  teammates: [String],
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User',
