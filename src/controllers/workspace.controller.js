@@ -6,13 +6,13 @@ module.exports = {
   async create( req, res ) {
     try {
       const user = await User.findById(req.user);
-      console.log(user)
+
       if( !user ) {
         throw new Error('User does not exist')
       }
 
       const workspace = await Workspace.create({ ...req.body, owner: user })
-      console.log(workspace)
+
       user.workspaces.push(workspace._id)
       await user.save({ validateBeforeSave: false })
 
@@ -45,17 +45,23 @@ module.exports = {
     try { 
       const { workspaceId } = req.params
 
-      const { teammates, ...rest } = req.body
-
+      const { name, description, weeks, sprint, teammates } = req.body
+      
       const teammate = teammates
 
-      const update = { ...rest, teammates: teammates ? teammates.concat(teammate): null}
-      console.log(update)
-      const workspace = await Workspace.findByIdAndUpdate(workspaceId, update, { new: true, useFindAndModify: false })
+      const workspace = await Workspace.findById(workspaceId)
+      
       if( !workspace ) {
         throw new Error('Could not updated that workspace')
       }
 
+      workspace.name = name
+      workspace.description = description
+      workspace.weeks = weeks
+      workspace.sprint = sprint
+      workspace.teammates = workspace.teammates.concat(teammate)
+      
+      await workspace.save({ validateBeforeSave: false })
       res.status(200).json({ message: 'Workspace updated', data: workspace })
     }
     catch(err) {
