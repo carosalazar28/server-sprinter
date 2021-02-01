@@ -1,6 +1,5 @@
 const Workspace = require('../models/workspace.model');
 const User = require('../models/user.model');
-const { ReadStream } = require('fs');
 
 module.exports = {
   async create( req, res ) {
