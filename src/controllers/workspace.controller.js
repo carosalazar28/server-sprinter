@@ -10,7 +10,7 @@ module.exports = {
         throw new Error('User does not exist')
       }
 
-      const workspace = await Workspace.create({ ...req.body, owner: user })
+      const workspace = await Workspace.create({ ...req.body, owner: user._id })
 
       user.workspaces.push(workspace._id)
       await user.save({ validateBeforeSave: false })
@@ -37,6 +37,28 @@ module.exports = {
     }
     catch(err) {
       res.status(400).json({ message: 'Workspace not found'})
+    }
+  },
+
+  async showWorkspaces( req, res ) {
+    console.log('here out try')
+    try {
+      console.log('here')
+      const user = await User.findById(req.user);
+      console.log(user)
+      const { _id } = user
+      console.log(_id)
+      const workspaces = await Workspace.find({ owner: { $eq: _id }});
+      
+      if(!workspaces) {
+        throw new Error('Todavía no tienes espacios de trabajo creados')
+      }
+      
+      res.status(200).json(workspaces)
+    }
+    catch(err) {
+      console.log(err)
+      res.status(404).json({ message: 'Workspace does not found' })
     }
   },
 
