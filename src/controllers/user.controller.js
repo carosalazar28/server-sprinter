@@ -28,6 +28,10 @@ module.exports = {
       if( !user ) {
         throw new Error(' Usuario o contraseña invalida' )
       }
+      const isValid = await bcrypt.compare( password, user.password )
+      if(!isValid) {
+        throw new Error( 'Usuario o contraseña invalida' )
+      }
       const token = jwt.sign(
         { id: user._id },
         process.env.SECRET,
