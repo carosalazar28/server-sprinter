@@ -41,13 +41,9 @@ module.exports = {
   },
 
   async showWorkspaces( req, res ) {
-    console.log('here out try')
     try {
-      console.log('here')
       const user = await User.findById(req.user);
-      console.log(user)
       const { _id } = user
-      console.log(_id)
       const workspaces = await Workspace.find({ owner: { $eq: _id }});
       
       if(!workspaces) {
@@ -57,7 +53,6 @@ module.exports = {
       res.status(200).json(workspaces)
     }
     catch(err) {
-      console.log(err)
       res.status(404).json({ message: 'Workspace does not found' })
     }
   },

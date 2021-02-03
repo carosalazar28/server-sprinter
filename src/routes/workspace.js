@@ -2,9 +2,9 @@ const router = require('express').Router();
 const workspaceController = require('../controllers/workspace.controller');
 const { auth } = require('../utils/auth');
 
+router.route('/workspace').get(auth, workspaceController.showWorkspaces);
 router.route('/').post(auth, workspaceController.create);
 router.route('/:workspaceId').get(workspaceController.show);
-router.route('/workspace').get(workspaceController.showWorkspaces);
 router.route('/:workspaceId').put(workspaceController.update);
 router.route('/:workspaceId').delete(workspaceController.destroy);
 
