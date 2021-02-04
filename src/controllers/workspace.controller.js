@@ -50,7 +50,7 @@ module.exports = {
         throw new Error('Todavía no tienes espacios de trabajo creados')
       }
       
-      res.status(200).json(workspaces)
+      res.status(200).json({message: 'workspace list', data: workspaces })
     }
     catch(err) {
       res.status(404).json({ message: 'Workspace does not found' })
