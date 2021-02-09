@@ -12,7 +12,6 @@ module.exports = {
       const token = jwt.sign(
         { id: user._id },
         process.env.SECRET,
-        { expiresIn: 60*60*24*30*100 }
       );
       res.status(201).json({ token })
     }
@@ -35,7 +34,6 @@ module.exports = {
       const token = jwt.sign(
         { id: user._id },
         process.env.SECRET,
-        { expiresIn: 60*60*24*30*100 }
       );
       res.status(201).json({ token })
     }
