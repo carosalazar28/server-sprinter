@@ -19,7 +19,11 @@ const workspaceSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
-  }
+  },
+  backlog: {
+    type: Schema.Types.ObjectId,
+    ref: 'Backlog',
+  },
 }, {
   timestamps: true,
 });

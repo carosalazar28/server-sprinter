@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const taskSchema = new Schema({
   name: 'String',
   description: 'String',
-  sprint: 'String',
+  status: 'String',
   asign: {
     type: 'String',
   },
@@ -15,6 +15,8 @@ const taskSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Backlog',
   },
+}, {
+  timestamps: true,
 });
 
 const Task = model('Task', taskSchema);
