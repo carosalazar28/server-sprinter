@@ -6,7 +6,7 @@ module.exports = {
     try {
       const { workspaceId } = req.params
       const workspace = await Workspace.findById(workspaceId).populate('backlog')
-      
+      console.log(workspace)
       if(!worskpace) {
         throw new Error('Invalid workspace')
       }
@@ -33,6 +33,7 @@ module.exports = {
       }
       res.status(201).json(task)
     } catch(err) {
+      console.log('here')
       res.status(400).json({ message: err.message })
     }
   },
