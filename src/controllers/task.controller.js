@@ -1,6 +1,7 @@
 const Task = require('../models/task.model');
 const Workspace = require('../models/workspace.model');
 const Backlog = require('../models/backlog.model');
+const User = require('../models/user.model');
 
 module.exports = {
 
@@ -20,7 +21,7 @@ module.exports = {
         backlog = await Backlog.create({
           workspace: workspace,
         }) 
-      
+        
         task = await Task.create({ ...req.body, backlog: backlog._id })
         
         backlog.tasks.push(task);
@@ -58,6 +59,22 @@ module.exports = {
       res.status(200).json({ message: 'Task updated', data: task })
     } catch(err) {
       res.status(400).json({ message: err.message })
+    }
+  },
+
+  async showTask( req, res ) {
+    try {
+      const user = await User.findById(req.user)
+      const { _id } = user
+      const tasks = await Task.find({ author: { $eq: _id }});
+
+      if(!tasks) {
+        throw new Error('Todavía no tienes espacios de trabajo creados')
+      }
+
+      res.status(200).json({ message: 'Task list', data: tasks })
+    } catch(err) {
+      res.status(404).json({ message: 'Task does not found' })
     }
   },
 }
