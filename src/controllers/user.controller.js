@@ -73,7 +73,7 @@ module.exports = {
   async update( req, res ) {
     try{
       const user = await User
-        .findByIdAndUpdate( req.user, req.body)
+        .findByIdAndUpdate( req.user, req.body, { new: true })
 
       if( !user ) {
         throw new Error('Could not update that user')

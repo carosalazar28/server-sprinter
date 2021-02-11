@@ -49,13 +49,12 @@ module.exports = {
   async update( req, res ) {
     try {
       const { taskId } = req.params
-      const task = await Task.findByIdAndUpdate(taskId, req.body)
+      const task = await Task.findByIdAndUpdate(taskId, req.body, { new: true })
 
       if( !task ) {
-        throw new Error('Could not updated that workspace')
+        throw new Error('Could not updated that task')
       }
-
-      await task.save({ validateBeforeSave: false })
+      
       res.status(200).json({ message: 'Task updated', data: task })
     } catch(err) {
       res.status(400).json({ message: err.message })
