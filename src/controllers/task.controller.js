@@ -1,7 +1,6 @@
 const Task = require('../models/task.model');
 const Workspace = require('../models/workspace.model');
 const Backlog = require('../models/backlog.model');
-const { update } = require('../models/task.model');
 
 module.exports = {
 
@@ -17,7 +16,7 @@ module.exports = {
       let backlog = workspace.backlog
       let user = workspace.owner
       let task;
-      if(!backlog) {
+      if( !backlog ) {
         backlog = await Backlog.create({
           workspace: workspace,
         }) 
@@ -50,10 +49,9 @@ module.exports = {
   async update( req, res ) {
     try {
       const { taskId } = req.params
-
       const task = await Task.findByIdAndUpdate(taskId, req.body)
 
-      if(!task) {
+      if( !task ) {
         throw new Error('Could not updated that workspace')
       }
 
