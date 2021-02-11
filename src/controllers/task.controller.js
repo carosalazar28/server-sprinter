@@ -55,6 +55,7 @@ module.exports = {
         throw new Error('Could not updated that workspace')
       }
 
+      await task.save({ validateBeforeSave: false })
       res.status(200).json({ message: 'Task updated', data: task })
     } catch(err) {
       res.status(400).json({ message: err.message })
