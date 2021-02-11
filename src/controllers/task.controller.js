@@ -1,4 +1,6 @@
 const Task = require('../models/task.model');
+const Workspace = require('../models/workspace.model');
+const Backlog = require('../models/backlog.model');
 
 module.exports = {
 
@@ -6,8 +8,8 @@ module.exports = {
     try {
       const { workspaceId } = req.params
       const workspace = await Workspace.findById(workspaceId).populate('backlog')
-      console.log(workspace)
-      if(!worskpace) {
+
+      if(!workspace) {
         throw new Error('Invalid workspace')
       }
 
@@ -15,15 +17,15 @@ module.exports = {
       let task;
       if(!backlog) {
         backlog = await Backlog.create({
-          worskpace: worskpace,
-        })
+          workspace: workspace,
+        }) 
       
         task = await Task.create({ ...req.body, backlog: backlog._id })
         
         backlog.tasks.push(task);
         await backlog.save({ validateBeforeSave: false })
         
-        worskpace.backlog = backlog._id;
+        workspace.backlog = backlog._id;
         await workspace.save({ validateBeforeSave: false })
       }
       else {
@@ -33,7 +35,6 @@ module.exports = {
       }
       res.status(201).json(task)
     } catch(err) {
-      console.log('here')
       res.status(400).json({ message: err.message })
     }
   },

@@ -4,8 +4,8 @@ const cors = require('cors');
 const { connect } = require('./src/db');
 const userRouter = require('./src/routes/user');
 const workspacesRouter = require('./src/routes/workspace');
-const taskRouter = require('./src/routes/task');
-const backlogRouter = require('./src/routes/task');
+const tasksRouter = require('./src/routes/task');
+const backlogRouter = require('./src/routes/backlog');
 
 const port = process.env.PORT || 8000;
 
@@ -17,7 +17,7 @@ app.use(cors());
 
 app.use('/user', userRouter);
 app.use('/workspaces', workspacesRouter);
-app.use('/task', taskRouter);
+app.use('/task', tasksRouter);
 app.use('/backlog', backlogRouter);
 
 app.listen(port, () => {
