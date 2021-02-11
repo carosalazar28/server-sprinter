@@ -6,6 +6,7 @@ function connect() {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   };
 
   mongoose.connect(mongoURI, options);
