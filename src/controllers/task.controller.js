@@ -2,6 +2,7 @@ const Task = require('../models/task.model');
 const Workspace = require('../models/workspace.model');
 const Backlog = require('../models/backlog.model');
 const User = require('../models/user.model');
+const { show } = require('./user.controller');
 
 module.exports = {
 
@@ -75,6 +76,20 @@ module.exports = {
       res.status(200).json({ message: 'Task list', data: tasks })
     } catch(err) {
       res.status(404).json({ message: 'Task does not found' })
+    }
+  },
+
+  async show( req, res ) {
+    try {
+      const { taskId } = req.params
+      const task = await Task.findById( taskId ).populate({ path: 'backlog' })
+
+      if( !task ) {
+        throw new Error('Task not found')
+      }
+      res.status(200).json({ message: 'Task found', data: taks })
+    } catch(error) {
+      res.status(404).json({ message: 'Task not found' })
     }
   },
 }
