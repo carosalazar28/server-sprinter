@@ -85,9 +85,10 @@ module.exports = {
       const task = await Task.findById( taskId ).populate({ path: 'backlog' })
 
       if( !task ) {
-        throw new Error('Task not found')
+        throw new Error('Task does not exits')
       }
-      res.status(200).json({ message: 'Task found', data: taks })
+      
+      res.status(200).json({ message: 'Task found', data: task })
     } catch(error) {
       res.status(404).json({ message: 'Task not found' })
     }
