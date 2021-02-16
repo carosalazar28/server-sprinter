@@ -76,7 +76,7 @@ module.exports = {
       workspace.description = description
       workspace.weeks = weeks
       workspace.sprint = sprint
-      workspace.teammates = workspace.teammates.concat(teammate)
+      workspace.teammates = teammate
       
       await workspace.save({ validateBeforeSave: false })
       res.status(200).json({ message: 'Workspace updated', data: workspace })
