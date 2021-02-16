@@ -63,8 +63,6 @@ module.exports = {
       const { workspaceId } = req.params
 
       const { name, description, weeks, sprint, teammates } = req.body
-      
-      const teammate = teammates
 
       const workspace = await Workspace.findById(workspaceId)
       
@@ -76,7 +74,7 @@ module.exports = {
       workspace.description = description
       workspace.weeks = weeks
       workspace.sprint = sprint
-      workspace.teammates = teammate
+      workspace.teammates = teammates
       
       await workspace.save({ validateBeforeSave: false })
       res.status(200).json({ message: 'Workspace updated', data: workspace })
