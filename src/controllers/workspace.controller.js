@@ -1,6 +1,7 @@
 const Workspace = require('../models/workspace.model');
 const User = require('../models/user.model');
 const Backlog = require('../models/backlog.model');
+const Task = require('../models/task.model');
 
 module.exports = {
   async create( req, res ) {
@@ -88,18 +89,22 @@ module.exports = {
     try { 
       const { workspaceId } = req.params
 
-      const workspace = await Workspace.findByIdAndDelete(workspaceId)
-      const backlogId = worskpace.backlog
+      const workspace = await Workspace.findByIdAndDelete(workspaceId).populate('backlog')
 
-      const backlog = await backlog.findByIdAndDelete(backlogId)
-      
+      const backlog = workspace.backlog
+
+      const tasks = await Task.deleteMany({ backlog: { $eq: backlog._id }})
+
+      const backlogs = await Backlog.findByIdAndDelete(backlog._id)
+
       if( !workspace ) {
         throw new Error('Could not updated that workspace')
       }
 
-      res.status(200).json({ message: 'Workspace deleted', data: workspace })
+      res.status(200).json({ message: 'Workspace deleted', data: [ workspace, tasks, backlogs ]  })
     }
     catch(err) {
+      console.log(err)
       res.status(400).json({ message: err.message })
     }
   },
