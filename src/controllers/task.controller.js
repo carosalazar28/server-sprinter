@@ -67,7 +67,8 @@ module.exports = {
     try {
       const user = await User.findById(req.user)
       const { _id } = user
-      const tasks = await Task.find({ author: { $eq: _id }});
+      const tasks = await Task.find({ author: { $eq: _id }})
+        .populate({ path: 'backlog', select: ['workspace']});
 
       if(!tasks) {
         throw new Error('Todavía no tienes espacios de trabajo creados')
@@ -84,11 +85,17 @@ module.exports = {
       const { taskId } = req.params
       const task = await Task.findById( taskId ).populate({ path: 'backlog' })
 
+      const { backlog } = task
+      const workspaceId = backlog.workspace
+
+      const workspace = await Workspace.findById( workspaceId )
+      const { teammates } = workspace
+
       if( !task ) {
         throw new Error('Task does not exits')
       }
       
-      res.status(200).json({ message: 'Task found', data: task })
+      res.status(200).json({ message: 'Task found', data: task, team: teammates })
     } catch(error) {
       res.status(404).json({ message: 'Task not found' })
     }
