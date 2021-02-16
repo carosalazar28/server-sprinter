@@ -1,5 +1,6 @@
 const Workspace = require('../models/workspace.model');
 const User = require('../models/user.model');
+const Backlog = require('../models/backlog.model');
 
 module.exports = {
   async create( req, res ) {
@@ -90,6 +91,10 @@ module.exports = {
       const { workspaceId } = req.params
 
       const workspace = await Workspace.findByIdAndDelete(workspaceId)
+      const backlogId = worskpace.backlog
+
+      const backlog = await backlog.findByIdAndDelete(backlogId)
+      
       if( !workspace ) {
         throw new Error('Could not updated that workspace')
       }
