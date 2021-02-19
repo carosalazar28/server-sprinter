@@ -71,4 +71,3 @@ _Las herramientas para el desarrollo de la API fueron_
 ## Autores ✒️
 
 - **Carolina Salazar** - _Full Stack Developer_ - [carosalazar28](https://github.com/carosalazar28)
-  > > > > > > > 3af9b96f00dcdda244ec72eb4b959d323cea1fc5
